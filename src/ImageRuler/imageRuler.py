@@ -1,0 +1,129 @@
+import tempfile
+from pathlib import Path
+
+import click
+from drawBot import *
+from drawBotGrid import verticalAlignTextBox
+from pypdf import PdfReader, PdfWriter
+
+
+def centimeters(points):
+    return points * 2.54 / 72
+
+def points(centimeters):
+    return centimeters * 72 / 2.54
+
+MONO_THIN = None
+MONO_LIGHT = None
+
+def installMonoFonts(force=False):
+    if MONO_THIN is None or force:
+        MONO_THIN = installFont("./IBMPlexMono-Thin.ttf")
+    if MONO_LIGHT is None or force:
+        MONO_LIGHT = installFont("./IBMPlexMono-Light.ttf")
+
+
+@click.command()
+@click.argument("srcFile", nargs=1, help="The path to the source PDF file.")
+@click.argument("outDir", nargs=1, help="The path to the folder to save the image to.")
+
+def ruleImage(srcFile, outDir):
+
+    installMonoFonts()
+
+    newDrawing()
+
+    outDir = Path(outDir)
+    srcFile = Path(srcFile)
+    outPath = outDir / (srcFile.stem + "_ruled" + srcFile.suffix)
+    pageNb = 0  # zero-based index
+
+    if outPath.exists():
+        return
+
+    outDir.mkdir(parents=True, exist_ok=True)
+
+    reader = PdfReader(srcFile)
+    writer = PdfWriter()
+    writer.add_page(reader.pages[pageNb])
+
+    pdfTempFile = tempfile.NamedTemporaryFile("wb")
+    writer.write(pdfTempFile)
+
+    # LAYOUT VARIABLES
+    rulerWidth = 20
+    rulerPadRight = 12
+    smallMark = 5
+    smallStroke = .3
+    largeMark = 8
+    largeStroke = .4
+    padding = 10
+    textSize = 4
+
+    # LAYOUT
+
+    width, height = imageSize(pdfTempFile.name)
+
+    cmWidth = centimeters(width)
+    cmHeight = centimeters(height)
+
+    cmUnit = width / cmWidth
+    mmUnit = cmUnit / 10
+
+    pageWidth = width + (padding * 2) + rulerWidth + rulerPadRight
+    pageHeight = height + (padding * 2)
+
+    newPage(pageWidth, pageHeight)
+
+    fill(0)
+    rect(0, 0, pageWidth, pageHeight)
+
+    with savedState():
+        x, y = (padding + rulerWidth + rulerPadRight, padding)
+        image(pdfTempFile.name, (x, y))
+
+    x = padding
+    y = padding
+    stroke(1)
+    mmHeight = int(round(cmHeight * 10))
+    for mm in range(mmHeight + 1):
+        fill(None)
+        if mm % 10 == 0 or mm == mmHeight:
+            sw = largeStroke
+            lineWidth = largeMark
+            showText = True if (y < (height + padding - mmUnit) or mm == mmHeight) else False
+            displayValue = str(int(round(mm/10)) if mm % 10 == 0 else round(mm/10, 1))
+        else:
+            sw = smallStroke
+            lineWidth = smallMark
+            showText = False
+        strokeWidth(sw)
+        line(
+            ((x + rulerWidth - lineWidth), y),
+            ((x + rulerWidth), y)
+        )
+        if showText:
+            font(MONO_LIGHT if mm == mmHeight else MONO_THIN)
+            fontSize(textSize)
+            fill(1)
+            verticalAlignTextBox(
+                displayValue,
+                (x, y - textSize, rulerWidth - lineWidth - 2, textSize * 2),
+                "right",
+                "center"
+            )
+        y += mmUnit
+
+    saveImage(outPath, imageResolution=300)
+    pdfTempFile.close()
+
+
+@click.command()
+@click.argument("srcDir", nargs=1, help="The path to the folder of the source PDF files.")
+@click.argument("outDir", nargs=1, help="The path to the folder to save the images to.")
+
+def ruleImages(srcDir, outDir):
+    srcDir = Path(srcDir)
+    outDir = Path(outDir)
+    for pdf in srcDir.rglob("*.pdf"):
+        ruleImage(pdf, outDir)
