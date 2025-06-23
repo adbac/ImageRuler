@@ -24,26 +24,26 @@ def installMonoFonts(force=False):
 
 
 @click.command()
-@click.argument("srcFile", nargs=1, type=click.Path(exists=True, file_okay=True, dir_okay=False, readable=True))
-@click.argument("outDir", nargs=1, type=click.Path(file_okay=False, dir_okay=True))
+@click.argument("srcfile", nargs=1, type=click.Path(exists=True, file_okay=True, dir_okay=False, readable=True))
+@click.argument("outdir", nargs=1, type=click.Path(file_okay=False, dir_okay=True))
 
-def ruleImage(srcFile, outDir):
+def ruleImage(srcfile, outdir):
 
     installMonoFonts()
 
     newDrawing()
 
-    outDir = Path(outDir)
-    srcFile = Path(srcFile)
-    outPath = outDir / (srcFile.stem + "_ruled" + srcFile.suffix)
+    outdir = Path(outdir)
+    srcfile = Path(srcfile)
+    outPath = outdir / (srcfile.stem + "_ruled" + srcfile.suffix)
     pageNb = 0  # zero-based index
 
     if outPath.exists():
         return
 
-    outDir.mkdir(parents=True, exist_ok=True)
+    outdir.mkdir(parents=True, exist_ok=True)
 
-    reader = PdfReader(srcFile)
+    reader = PdfReader(srcfile)
     writer = PdfWriter()
     writer.add_page(reader.pages[pageNb])
 
@@ -119,11 +119,11 @@ def ruleImage(srcFile, outDir):
 
 
 @click.command()
-@click.argument("srcDir", nargs=1, type=click.Path(exists=True, file_okay=False, dir_okay=True))
-@click.argument("outDir", nargs=1, type=click.Path(file_okay=False, dir_okay=True))
+@click.argument("srcdir", nargs=1, type=click.Path(exists=True, file_okay=False, dir_okay=True))
+@click.argument("outdir", nargs=1, type=click.Path(file_okay=False, dir_okay=True))
 
-def ruleImages(srcDir, outDir):
-    srcDir = Path(srcDir)
-    outDir = Path(outDir)
-    for pdf in srcDir.rglob("*.pdf"):
-        ruleImage(pdf, outDir)
+def ruleImages(srcdir, outdir):
+    srcdir = Path(srcdir)
+    outdir = Path(outdir)
+    for pdf in srcdir.rglob("*.pdf"):
+        ruleImage(pdf, outdir)
