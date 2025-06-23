@@ -26,7 +26,7 @@ def ruleImage(srcfile, outdir):
 
     outdir = Path(outdir)
     srcfile = Path(srcfile)
-    outPath = outdir / (srcfile.stem + "_ruled" + srcfile.suffix)
+    outPath = outdir / (srcfile.stem + "_ruled.jpg")
     pageNb = 0  # zero-based index
 
     if outPath.exists():
