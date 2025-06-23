@@ -24,8 +24,8 @@ def installMonoFonts(force=False):
 
 
 @click.command()
-@click.argument("srcFile", nargs=1, help="The path to the source PDF file.")
-@click.argument("outDir", nargs=1, help="The path to the folder to save the image to.")
+@click.argument("srcFile", nargs=1, type=click.Path(exists=True, file_okay=True, dir_okay=False, readable=True))
+@click.argument("outDir", nargs=1, type=click.Path(file_okay=False, dir_okay=True))
 
 def ruleImage(srcFile, outDir):
 
@@ -119,8 +119,8 @@ def ruleImage(srcFile, outDir):
 
 
 @click.command()
-@click.argument("srcDir", nargs=1, help="The path to the folder of the source PDF files.")
-@click.argument("outDir", nargs=1, help="The path to the folder to save the images to.")
+@click.argument("srcDir", nargs=1, type=click.Path(exists=True, file_okay=False, dir_okay=True))
+@click.argument("outDir", nargs=1, type=click.Path(file_okay=False, dir_okay=True))
 
 def ruleImages(srcDir, outDir):
     srcDir = Path(srcDir)
