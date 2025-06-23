@@ -12,9 +12,6 @@ def centimeters(points):
 def points(centimeters):
     return centimeters * 72 / 2.54
 
-MONO_THIN = "./IBMPlexMono-Thin.ttf"
-MONO_LIGHT = "./IBMPlexMono-Light.ttf"
-
 
 @click.command()
 @click.argument("srcfile", nargs=1, type=click.Path(exists=True, file_okay=True, dir_okay=False, readable=True))
@@ -100,7 +97,7 @@ def ruleImage(srcfile, outdir):
         )
         if showText:
             print(mm == mmHeight)
-            font(MONO_LIGHT if mm == mmHeight else MONO_THIN)
+            font("IBMPlexMono-Light" if mm == mmHeight else "IBMPlexMono-Thin")
             fontSize(textSize)
             fill(1)
             verticalAlignTextBox(
