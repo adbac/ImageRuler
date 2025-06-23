@@ -21,6 +21,10 @@ MONO_LIGHT = "src/ImageRuler/IBMPlexMono-Light.ttf"
 @click.argument("outdir", nargs=1, type=click.Path(file_okay=False, dir_okay=True))
 
 def ruleImage(srcfile, outdir):
+    """
+    Takes a PDF file and makes a JPG image with the first page of the file
+    and a ruler on its left side indicating the height of the page's size.
+    """
 
     newDrawing()
 
@@ -115,6 +119,9 @@ def ruleImage(srcfile, outdir):
 @click.argument("outdir", nargs=1, type=click.Path(file_okay=False, dir_okay=True))
 
 def ruleImages(srcdir, outdir):
+    """
+    Calls the `ruleImage` function for every PDF file in a given folder.
+    """
     srcdir = Path(srcdir)
     outdir = Path(outdir)
     for pdf in srcdir.rglob("*.pdf"):
