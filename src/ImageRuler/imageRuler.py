@@ -54,7 +54,7 @@ def ruleImage(srcfile, outdir):
 
     # LAYOUT
 
-    width, height = imageSize(pdfTempFile.name)
+    width, height = imageSize(pdfTempFile)
 
     cmWidth = centimeters(width)
     cmHeight = centimeters(height)
