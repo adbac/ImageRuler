@@ -12,7 +12,7 @@ def centimeters(points):
 def points(centimeters):
     return centimeters * 72 / 2.54
 
-MONO_THIN = "src/ImageRuler/IBMPlexMono-Light.ttf"
+MONO_THIN = "src/ImageRuler/IBMPlexMono-Thin.ttf"
 MONO_LIGHT = "src/ImageRuler/IBMPlexMono-Light.ttf"
 
 
