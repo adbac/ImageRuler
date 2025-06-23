@@ -16,7 +16,7 @@ def points(centimeters):
 @click.command()
 @click.argument("srcfile", nargs=1, type=click.Path(exists=True, file_okay=True, dir_okay=False, readable=True))
 @click.argument("outdir", nargs=1, type=click.Path(file_okay=False, dir_okay=True))
-@click.option("-s", "--suffix", nargs=1, help="The suffix to add to the filename for distinction purposes.")
+@click.option("-s", "--suffix", default="_ruled", nargs=1, help="The suffix to add to the filename for distinction purposes.")
 @click.option("-o", "--overwrite", is_flag=True, help="Overwrite existing files.")
 
 def ruleImage(srcfile, outdir, suffix="_ruled", overwrite=False):
@@ -119,7 +119,7 @@ def ruleImage(srcfile, outdir, suffix="_ruled", overwrite=False):
 @click.command()
 @click.argument("srcdir", nargs=1, type=click.Path(exists=True, file_okay=False, dir_okay=True))
 @click.argument("outdir", nargs=1, type=click.Path(file_okay=False, dir_okay=True))
-@click.option("-s", "--suffix", nargs=1, help="The suffix to add to the filenames for distinction purposes.")
+@click.option("-s", "--suffix", default="_ruled", nargs=1, help="The suffix to add to the filenames for distinction purposes.")
 @click.option("-o", "--overwrite", is_flag=True, help="Overwrite existing files.")
 
 def ruleImages(srcdir, outdir, suffix="_ruled", overwrite=False):
