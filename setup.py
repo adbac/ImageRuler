@@ -21,6 +21,8 @@ setup(
     install_requires=[
         "click",
         "pypdf>=5.6.1",
+        "drawBot @ https://github.com/typemytype/drawbot/archive/main.zip",
+        "drawBotGrid @ https://github.com/mathieureguer/drawbotgrid/archive/main.zip",
     ],
     # dependency_links=[
     #     "https://github.com/typemytype/drawbot",
