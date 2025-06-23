@@ -20,9 +20,11 @@ setup(
         """,
     install_requires=[
         "click",
-        "git+https://github.com/typemytype/drawbot",
-        "git+https://github.com/mathieureguer/drawbotgrid",
         "pypdf>=5.6.1",
+    ],
+    dependency_links=[
+        "https://github.com/typemytype/drawbot",
+        "https://github.com/mathieureguer/drawbotgrid",
     ],
     packages=find_packages(where="src"),
     package_dir={"": "src"},

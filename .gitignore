@@ -7,3 +7,5 @@ venv/
 
 tests/
 archive/
+
+requirements.txt
