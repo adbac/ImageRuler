@@ -22,10 +22,10 @@ setup(
         "click",
         "pypdf>=5.6.1",
     ],
-    dependency_links=[
-        "https://github.com/typemytype/drawbot",
-        "https://github.com/mathieureguer/drawbotgrid",
-    ],
+    # dependency_links=[
+    #     "https://github.com/typemytype/drawbot",
+    #     "https://github.com/mathieureguer/drawbotgrid",
+    # ],
     packages=find_packages(where="src"),
     package_dir={"": "src"},
 )
