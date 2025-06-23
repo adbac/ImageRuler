@@ -100,7 +100,6 @@ def ruleImage(srcfile, outdir, suffix="_ruled", overwrite=False):
             ((x + rulerWidth), y)
         )
         if showText:
-            print(mm == mmHeight)
             font("IBMPlexMono-Light" if mm == mmHeight else "IBMPlexMono-Thin")
             fontSize(textSize)
             fill(1)
@@ -126,7 +125,5 @@ def ruleImages(srcdir, outdir, suffix="_ruled", overwrite=False):
     """
     Calls the `ruleImage` function for every PDF file in a given folder.
     """
-    srcdir = Path(srcdir)
-    outdir = Path(outdir)
-    for pdf in srcdir.rglob("*.pdf"):
-        ruleImage(pdf, outdir, suffix, overwrite)
+    for pdf in Path(srcdir).rglob("*.pdf"):
+        ruleImage(str(pdf), outdir, suffix, overwrite)
