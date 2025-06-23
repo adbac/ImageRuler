@@ -4,6 +4,7 @@ import click
 from drawBot import *
 from drawBotGrid import verticalAlignTextBox
 from pypdf import PdfReader, PdfWriter
+import subprocess
 
 
 def centimeters(points):
@@ -126,4 +127,12 @@ def ruleImages(srcdir, outdir, suffix="_ruled", overwrite=False):
     Calls the `ruleImage` function for every PDF file in a given folder.
     """
     for pdf in Path(srcdir).rglob("*.pdf"):
-        ruleImage(str(pdf), outdir, suffix, overwrite)
+        args = [
+            "rule_image",
+            str(pdf),
+            str(outdir),
+            "-s", suffix,
+        ]
+        if overwrite:
+            args.append("-o")
+        subprocess.run(args, check=True)
