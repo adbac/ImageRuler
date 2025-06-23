@@ -13,14 +13,8 @@ def centimeters(points):
 def points(centimeters):
     return centimeters * 72 / 2.54
 
-MONO_THIN = None
-MONO_LIGHT = None
-
-def installMonoFonts(force=False):
-    if MONO_THIN is None or force:
-        MONO_THIN = installFont("./IBMPlexMono-Thin.ttf")
-    if MONO_LIGHT is None or force:
-        MONO_LIGHT = installFont("./IBMPlexMono-Light.ttf")
+MONO_THIN = "src/ImageRuler/IBMPlexMono-Light.ttf"
+MONO_LIGHT = "src/ImageRuler/IBMPlexMono-Light.ttf"
 
 
 @click.command()
@@ -28,8 +22,6 @@ def installMonoFonts(force=False):
 @click.argument("outdir", nargs=1, type=click.Path(file_okay=False, dir_okay=True))
 
 def ruleImage(srcfile, outdir):
-
-    installMonoFonts()
 
     newDrawing()
 
