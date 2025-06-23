@@ -1,4 +1,3 @@
-import tempfile
 from pathlib import Path
 
 import click
@@ -39,8 +38,9 @@ def ruleImage(srcfile, outdir):
     writer = PdfWriter()
     writer.add_page(reader.pages[pageNb])
 
-    pdfTempFile = tempfile.NamedTemporaryFile("wb")
-    writer.write(pdfTempFile)
+    pdfTempPath = outdir / (srcfile.stem + "_temp" + srcfile.suffix)
+    with open(pdfTempPath, "wb") as f:
+        writer.write(f)
 
     # LAYOUT VARIABLES
     rulerWidth = 20
@@ -54,7 +54,7 @@ def ruleImage(srcfile, outdir):
 
     # LAYOUT
 
-    width, height = imageSize(pdfTempFile)
+    width, height = imageSize(pdfTempPath)
 
     cmWidth = centimeters(width)
     cmHeight = centimeters(height)
@@ -72,7 +72,7 @@ def ruleImage(srcfile, outdir):
 
     with savedState():
         x, y = (padding + rulerWidth + rulerPadRight, padding)
-        image(pdfTempFile.name, (x, y))
+        image(pdfTempPath, (x, y))
 
     x = padding
     y = padding
@@ -107,7 +107,7 @@ def ruleImage(srcfile, outdir):
         y += mmUnit
 
     saveImage(outPath, imageResolution=300)
-    pdfTempFile.close()
+    pdfTempPath.unlink(missing_ok=True)
 
 
 @click.command()
