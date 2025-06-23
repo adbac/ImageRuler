@@ -16,8 +16,10 @@ def points(centimeters):
 @click.command()
 @click.argument("srcfile", nargs=1, type=click.Path(exists=True, file_okay=True, dir_okay=False, readable=True))
 @click.argument("outdir", nargs=1, type=click.Path(file_okay=False, dir_okay=True))
+@click.option("-s", "--suffix", nargs=1, help="The suffix to add to the filename for distinction purposes.")
+@click.option("-o", "--overwrite", is_flag=True, help="Overwrite existing files.")
 
-def ruleImage(srcfile, outdir):
+def ruleImage(srcfile, outdir, suffix="_ruled", overwrite=False):
     """
     Takes a PDF file and makes a JPG image with the first page of the file
     and a ruler on its left side indicating the height of the page's size.
@@ -27,10 +29,12 @@ def ruleImage(srcfile, outdir):
 
     outdir = Path(outdir)
     srcfile = Path(srcfile)
-    outPath = outdir / (srcfile.stem + "_ruled.jpg")
+    outPath = outdir / (srcfile.stem + suffix + ".jpg")
     pageNb = 0  # zero-based index
 
-    if outPath.exists():
+    if outPath.exists() and overwrite:
+        outPath.unlink()
+    elif outPath.exists():
         return
 
     outdir.mkdir(parents=True, exist_ok=True)
@@ -115,12 +119,14 @@ def ruleImage(srcfile, outdir):
 @click.command()
 @click.argument("srcdir", nargs=1, type=click.Path(exists=True, file_okay=False, dir_okay=True))
 @click.argument("outdir", nargs=1, type=click.Path(file_okay=False, dir_okay=True))
+@click.option("-s", "--suffix", nargs=1, help="The suffix to add to the filenames for distinction purposes.")
+@click.option("-o", "--overwrite", is_flag=True, help="Overwrite existing files.")
 
-def ruleImages(srcdir, outdir):
+def ruleImages(srcdir, outdir, suffix="_ruled", overwrite=False):
     """
     Calls the `ruleImage` function for every PDF file in a given folder.
     """
     srcdir = Path(srcdir)
     outdir = Path(outdir)
     for pdf in srcdir.rglob("*.pdf"):
-        ruleImage(pdf, outdir)
+        ruleImage(pdf, outdir, suffix, overwrite)
