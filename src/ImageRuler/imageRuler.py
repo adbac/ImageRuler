@@ -12,8 +12,8 @@ def centimeters(points):
 def points(centimeters):
     return centimeters * 72 / 2.54
 
-MONO_THIN = "src/ImageRuler/IBMPlexMono-Thin.ttf"
-MONO_LIGHT = "src/ImageRuler/IBMPlexMono-Light.ttf"
+MONO_THIN = "./IBMPlexMono-Thin.ttf"
+MONO_LIGHT = "./IBMPlexMono-Light.ttf"
 
 
 @click.command()
@@ -99,6 +99,7 @@ def ruleImage(srcfile, outdir):
             ((x + rulerWidth), y)
         )
         if showText:
+            print(mm == mmHeight)
             font(MONO_LIGHT if mm == mmHeight else MONO_THIN)
             fontSize(textSize)
             fill(1)
