@@ -13,6 +13,7 @@ It uses the `pypdf` and `drawBot` Python modules to make the image (along with `
    * Open the Terminal app, type `python` or `python3` > if it displays Python's version and info, you're good.
    * If not, download the latest version here: https://www.python.org/downloads/
 2. Install the tool by running `python3 -m pip install git+https://github.com/adbac/ImageRuler` (you can copy/paste)
+3. For legibility considerations, the digital ruler was built with a monospace font. You can find it in the `fonts` folder of this repository, download it and install it. You can also choose not to, it will work either way!
 
 ## Usage
 
