@@ -33,7 +33,7 @@ rule_images '<pdf-folder-path>' '<images-folder-path>'
 ```
 Where `<pdf-folder-path>` is the path to the folder containing the PDF files that will be used, and `<images-folder-path>` is the path to the folder the final image will be placed in.
 
-**All paths have to be relative to the current working folder** - You can display it by typing `pwd` in the terminal
+**All paths must be relative to the current working folder** - You can display it by typing `pwd` in the terminal
 
 ---
 
