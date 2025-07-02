@@ -49,7 +49,7 @@ Here, the final image will have the name `book_cover.pdf` instead of `book_ruled
 
 #### Overwriting files
 
-By default, if the final image already exists, the tool skips it. But if you want to overwrite exisiting images with the option `-o`. Example:
+By default, if the final image already exists, the tool skips it. But if you want you can overwrite exisiting images with the option `-o`. Example:
 ```shell
 rule_image 'scans/book.pdf' 'images/' -o
 ```
