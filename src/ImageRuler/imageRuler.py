@@ -115,6 +115,8 @@ def ruleImage(srcfile, outdir, suffix="_ruled", overwrite=False):
     saveImage(outPath, imageResolution=300)
     pdfTempPath.unlink(missing_ok=True)
 
+    print(f"{srcfile} > {outPath}")
+
 
 @click.command()
 @click.argument("srcdir", nargs=1, type=click.Path(exists=True, file_okay=False, dir_okay=True))
